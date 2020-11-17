@@ -1,11 +1,11 @@
 ---
 title: "Reproducible Research: Peer Assessment 1"
 author: "*Marco Liguori*"
+date: 11/16/2020
 output: 
   html_document:
     keep_md: true
 ---
-
 
 ## Loading and preprocessing the data
 
@@ -43,7 +43,7 @@ actByDate <- group_by(activity, date) %>%
   summarize(steps = sum(steps, na.rm = TRUE))
 
 #total steps per day in pre-imputed data
-summaryRawData <- summarize(actByDate, mean.raw = mean(steps), median.raw = median(steps))
+summaryRawData <- summarize(actByDate, mean.total.seps.raw = mean(steps), median.total.seps.raw = median(steps))
 
 knitr::kable(summaryRawData, caption = "Mean and median number of steps taken each day")
 ```
@@ -52,13 +52,13 @@ knitr::kable(summaryRawData, caption = "Mean and median number of steps taken ea
 
 Table: Mean and median number of steps taken each day
 
-| mean.raw| median.raw|
-|--------:|----------:|
-|  9354.23|      10395|
+| mean.total.seps.raw| median.total.seps.raw|
+|-------------------:|---------------------:|
+|             9354.23|                 10395|
 
 ```r
 #make histogram of steps taken each day
-with(actByDate, hist(steps, breaks = 10))
+with(actByDate, hist(steps, breaks = 10, main = "Total steps frequency"))
 
 #add vertical lines where the mean and median occur
 with(actByDate, abline(v = c(mean(steps), median(steps)), col = c("blue", "red")))
@@ -115,16 +115,16 @@ actImputedByDate <- group_by(activityImputed, date) %>%
   summarize(steps = sum(steps))
 
 #total steps per day in imputed data. Can be compared to summaryRawData
-summaryImputedData <- summarize(actImputedByDate, mean.imputed = mean(steps), median.imputed = median(steps))
+summaryImputedData <- summarize(actImputedByDate, mean.total.seps.imputed = mean(steps), median.total.seps.imputed = median(steps))
 
 knitr::kable(summaryImputedData)
 ```
 
 
 
-| mean.imputed| median.imputed|
-|------------:|--------------:|
-|     10766.19|       10766.19|
+| mean.total.seps.imputed| median.total.seps.imputed|
+|-----------------------:|-------------------------:|
+|                10766.19|                  10766.19|
 
 ```r
 knitr::kable(summaryRawData)
@@ -132,9 +132,9 @@ knitr::kable(summaryRawData)
 
 
 
-| mean.raw| median.raw|
-|--------:|----------:|
-|  9354.23|      10395|
+| mean.total.seps.raw| median.total.seps.raw|
+|-------------------:|---------------------:|
+|             9354.23|                 10395|
 
 ```r
 par(mfrow = c(1, 2))
